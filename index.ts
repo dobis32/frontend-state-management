@@ -17,5 +17,8 @@ const accesors: iAccessors = {
 // register appropriate event listeners accordingly
 const elementsToBind: Array<HTMLElement> = Array.from(document.querySelectorAll('.ggd-bound'));
 elementsToBind.forEach((el: HTMLElement) => {
-    
+    const att: Attr = el.attributes.getNamedItem("ggd-bind");
+    console.log('found a bound input', att.name, att.value);
+    // create observable
+    // register it to state
 });
