@@ -15,10 +15,30 @@ const accesors: iAccessors = {
 
 // find all DOM elements with "ggdbind" attribute
 // register appropriate event listeners accordingly
-const elementsToBind: Array<HTMLElement> = Array.from(document.querySelectorAll('.ggd-bound'));
-elementsToBind.forEach((el: HTMLElement) => {
+const bindingElements: Array<HTMLElement> = Array.from(document.querySelectorAll('.ggd-binding'));
+bindingElements.forEach((el: HTMLElement) => {
     const att: Attr = el.attributes.getNamedItem("ggd-bind");
-    console.log('found a bound input', att.name, att.value);
+    if (att != null) console.log('found a bound input', att.name, att.value);    
+});
+
+const elementsBoundToSomeValue: Array<HTMLElement> = Array.from(document.querySelectorAll('.ggd-bind'));
+elementsBoundToSomeValue.forEach((el: HTMLElement) => {
+    const att: Attr = el.attributes.getNamedItem("ggd-bound");
     // create observable
     // register it to state
 });
+
+const elementBindingMap: { [key:string]: Array<HTMLElement> } = buildElementBindingMap(bindingElements, elementsBoundToSomeValue);
+
+function buildElementBindingMap(bindingElements: Array<HTMLElement>, boundElements: Array<HTMLElement>): { [key:string]: Array<HTMLElement> } {
+    const elementBindingMap: { [key:string]: Array<HTMLElement> } = { };
+    bindingElements.forEach((el: HTMLElement) => {
+        const att: Attr = el.attributes.getNamedItem("ggd-binding");
+        if (att != undefined) throw Error('failed to bind value, there is no ggd-binding attribute on this element! ' + el);
+        const bindedElements: Array<HTMLElement> = elementsBoundToSomeValue.filter((elt: HTMLElement) => el.attributes.getNamedItem("ggd-bind") != null);
+        const bindingID: string = el.id;
+        elementBindingMap[bindingID] = bindedElements;
+        
+    });
+    return elementBindingMap;
+}
