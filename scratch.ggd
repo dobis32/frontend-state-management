@@ -1,0 +1,9 @@
+[[ #PROPS data ]]
+[[ #FOR d IN data ]]
+    <h2>{{ d.title }}</h2>
+    <ul>
+        [[ #FOR i IN d.items ]]
+            <li>{{ i }}</li>
+        [[ #ENDFOR ]]
+    </ul>
+[[ #ENDFOR ]]
